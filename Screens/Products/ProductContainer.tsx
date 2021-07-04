@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
+import { ProductList } from "./ProductList";
 
 const data: IProduct[] = require("../../assets/data/products.json");
 
@@ -13,7 +14,7 @@ interface IObjectId {
   $oid: string;
 }
 
-interface IProduct {
+export interface IProduct {
   _id: IObjectId;
   image: string;
   brand: string;
@@ -39,16 +40,17 @@ const ProductContainer = () => {
     };
   }, []);
 
-  const renderItem = ({ item }: { item: IProduct }) => (
-    <Text>{item.brand}</Text>
-  );
+  const renderItem = ({ item }: { item: IProduct }) => {
+    console.log(item.name);
+    return <ProductList key={item.name} item={item} />;
+  };
 
   return (
-    <View style={styles.container}>
+    <View>
       <Text>Product Container</Text>
-      <View>
+      <View style={{ marginTop: 100 }}>
         <FlatList
-          horizontal
+          numColumns={2}
           data={products}
           renderItem={renderItem}
           keyExtractor={(item) => item.name}
@@ -63,7 +65,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-
     justifyContent: "center",
   },
 });
