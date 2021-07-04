@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { View, StyleSheet, ActivityIndicator, FlatList } from "react-native";
 import {
-  View,
-  StyleSheet,
+  Container,
+  HStack,
+  Icon,
+  IconButton,
+  Item,
+  Input,
   Text,
-  ActivityIndicator,
-  FlatList,
-} from "react-native";
+  Box,
+} from "native-base";
+import { Ionicons } from "@expo/vector-icons";
+
 import { ProductList } from "./ProductList";
 
 const data: IProduct[] = require("../../assets/data/products.json");
@@ -46,26 +52,51 @@ const ProductContainer = () => {
   };
 
   return (
-    <View>
-      <Text>Product Container</Text>
-      <View style={{ marginTop: 100 }}>
-        <FlatList
-          numColumns={2}
-          data={products}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.name}
+    <Box>
+      <HStack px={1} py={3} justifyContent="space-between" alignItems="center">
+        <Input
+          placeholder="Search"
+          variant="filled"
+          width="100%"
+          bg="gray.200"
+          borderRadius={10}
+          py={1}
+          px={2}
+          _web={{
+            _focus: { borderColor: "muted.300", style: { boxShadow: "none" } },
+          }}
+          InputLeftElement={
+            <Icon
+              size="sm"
+              ml={2}
+              color="gray.400"
+              as={<Ionicons name="ios-search" />}
+            />
+          }
         />
-      </View>
-    </View>
+      </HStack>
+      <FlatList
+        numColumns={2}
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.name}
+      />
+    </Box>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexWrap: "wrap",
+    backgroundColor: "red",
+  },
+  listContainer: {
+    width: "100%",
+    flexDirection: "row",
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+    backgroundColor: "gainsboro",
   },
 });
 
